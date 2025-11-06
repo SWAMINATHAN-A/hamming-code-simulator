@@ -69,25 +69,25 @@ export function DetailedStepLog({ steps, darkMode }: DetailedStepLogProps) {
     switch (type) {
       case 'formula':
         return darkMode 
-          ? 'border-l-[#FFB300] bg-[#2C2766]' 
+          ? 'border-l-[#FFB300] bg-[#2a2a2a]' 
           : 'border-l-[#FFB300] bg-[#FFFFFF]';
       case 'calculation':
         return darkMode 
-          ? 'border-l-[#FFB300] bg-[#2C2766]' 
+          ? 'border-l-[#FFB300] bg-[#2a2a2a]' 
           : 'border-l-[#FFB300] bg-[#FFFFFF]';
       case 'result':
         return darkMode 
-          ? 'border-l-[#FFB300] bg-[#2C2766]' 
+          ? 'border-l-[#FFB300] bg-[#2a2a2a]' 
           : 'border-l-[#FFB300] bg-[#FFB300]/5';
       default:
         return darkMode 
-          ? 'border-l-[#7C70C8] bg-[#2C2766]' 
+          ? 'border-l-[#7C70C8] bg-[#2a2a2a]' 
           : 'border-l-[#E7E6F8] bg-[#FFFFFF]';
     }
   };
 
   return (
-    <Card className={`p-6 sticky top-24 shadow-lg w-full max-w-[600px] ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+    <Card className={`p-6 sticky top-24 shadow-lg w-full max-w-[600px] ${darkMode ? 'bg-[#2a2a2a] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <h3 className={`${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
@@ -182,7 +182,7 @@ export function DetailedStepLog({ steps, darkMode }: DetailedStepLogProps) {
                             {/* Formula Section */}
                             {step.formula && (
                               <div className={`mb-3 p-3 rounded-lg border-2 ${
-                                darkMode ? 'bg-[#2C2766] border-[#7C70C8]' : 'bg-[#FFB300]/5 border-[#E7E6F8]'
+                                darkMode ? 'bg-[#2a2a2a] border-[#7C70C8]' : 'bg-[#FFB300]/5 border-[#E7E6F8]'
                               }`}>
                                 <div className={`text-xs mb-2 ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
                                   • Formula:
@@ -200,7 +200,7 @@ export function DetailedStepLog({ steps, darkMode }: DetailedStepLogProps) {
                             {/* Calculation/Substitution Section */}
                             {step.calculation && (
                               <div className={`mb-3 p-3 rounded-lg border-2 ${
-                                darkMode ? 'bg-[#2C2766] border-[#7C70C8]' : 'bg-[#FFFFFF] border-[#E7E6F8]'
+                                darkMode ? 'bg-[#2a2a2a] border-[#7C70C8]' : 'bg-[#FFFFFF] border-[#E7E6F8]'
                               }`}>
                                 <div className={`text-xs mb-2 ${darkMode ? 'text-[#FFB300]/70' : 'text-[#24292F]/70'}`}>
                                   • Substitute values:
@@ -300,7 +300,7 @@ export function DetailedStepLog({ steps, darkMode }: DetailedStepLogProps) {
                                                   ? 'bg-[#FFB300] text-white border-[#FFB300]'
                                                   : 'bg-[#FFB300] text-white border-[#FFB300]'
                                                 : darkMode
-                                                ? 'bg-[#2C2766] border-[#7C70C8] text-[#FFB300]'
+                                                ? 'bg-[#2a2a2a] border-[#7C70C8] text-[#FFB300]'
                                                 : 'bg-[#FFFFFF] border-[#E7E6F8] text-[#24292F]'
                                             }`}
                                           >

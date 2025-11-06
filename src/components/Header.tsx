@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Switch } from "./ui/switch";
 import { Button } from "./ui/button";
 
-import DevelopedByModal from "./modals/DevelopedByModal";
-
 interface HeaderProps {
   darkMode: boolean;
   setDarkMode: (value: boolean) => void;
+  onHome?: () => void;
 }
 
-export function Header({ darkMode, setDarkMode }: HeaderProps) {
-  const [isDevelopedByOpen, setIsDevelopedByOpen] = useState(false);
-
+export function Header({ darkMode, setDarkMode, onHome }: HeaderProps) {
   return (
     <>
       <header className={`border-b-2 ${darkMode ? "border-[#7C70C8] bg-[#2C2766]" : "border-[#E7E6F8] bg-[#FFFFFF]"} sticky top-0 z-50 backdrop-blur-sm bg-opacity-95 shadow-lg`}>
@@ -21,6 +17,11 @@ export function Header({ darkMode, setDarkMode }: HeaderProps) {
             
             {/* Logo & Title */}
             <div className="flex items-center gap-3">
+              {onHome && (
+                <Button variant="outline" size="sm" onClick={onHome} className={`${darkMode ? "bg-[#7C70C8] border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>
+                  Home
+                </Button>
+              )}
               <div className="w-10 h-10 rounded-lg flex items-center justify-center shadow-md bg-gradient-to-br from-[#FFB300] to-[#FFB300]/80">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
@@ -38,13 +39,13 @@ export function Header({ darkMode, setDarkMode }: HeaderProps) {
 
             {/* Nav Buttons */}
             <div className="hidden md:flex items-center gap-3">
-              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent('app-nav-learn'))} className={`${darkMode ? "border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Learn</Button>
+              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent('app-nav-learn'))} className={`${darkMode ? "bg-[#2C2766] border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Learn</Button>
 
-              <Button variant="outline" size="sm" onClick={() => setIsDevelopedByOpen(true)} className={`${darkMode ? "border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Developed By</Button>
+              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent('app-nav-developed-by'))} className={`${darkMode ? " bg-[#2C2766] border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Developed By</Button>
 
-              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent("app-nav-help"))} className={`${darkMode ? "border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Help</Button>
+              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent("app-nav-help"))} className={`${darkMode ? " bg-[#2C2766] border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Help</Button>
 
-              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent("app-download-request"))} className={`${darkMode ? "border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Download</Button>
+              <Button variant="outline" size="sm" onClick={() => window.dispatchEvent(new CustomEvent("app-download-request"))} className={`${darkMode ? "bg-[#2C2766] border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10" : "border-[#FFB300] text-[#24292F] hover:bg-[#FFB300]/10"}`}>Download</Button>
             </div>
 
             {/* Dark Mode */}
@@ -56,9 +57,6 @@ export function Header({ darkMode, setDarkMode }: HeaderProps) {
           </div>
         </div>
       </header>
-
-      {/* Developed By Modal */}
-      <DevelopedByModal open={isDevelopedByOpen} onClose={() => setIsDevelopedByOpen(false)} />
     </>
   );
 }

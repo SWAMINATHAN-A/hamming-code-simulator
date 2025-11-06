@@ -1,32 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Header } from './components/Header';
 import { EncoderPanel } from './components/EncoderPanel';
 import { DecoderPanel } from './components/DecoderPanel';
 import Help from './components/Help';
 import Learn from './components/Learn';
+import DevelopedBy from './components/DevelopedBy';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { motion } from 'motion/react';
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
-  const [showLearn, setShowLearn] = useState(false);
+  const [darkMode, setDarkMode] = React.useState(false);
+  const [showHelp, setShowHelp] = React.useState(false);
+  const [showLearn, setShowLearn] = React.useState(false);
+  const [showDevelopedBy, setShowDevelopedBy] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const openHelp = () => setShowHelp(true);
     const openLearn = () => setShowLearn(true);
+    const openDevelopedBy = () => setShowDevelopedBy(true);
 
     window.addEventListener('app-nav-help', openHelp);
     window.addEventListener('app-nav-learn', openLearn);
+    window.addEventListener('app-nav-developed-by', openDevelopedBy);
 
     return () => {
       window.removeEventListener('app-nav-help', openHelp);
       window.removeEventListener('app-nav-learn', openLearn);
+      window.removeEventListener('app-nav-developed-by', openDevelopedBy);
     };
   }, []);
 
-  if (showHelp) return <Help onBack={() => setShowHelp(false)} darkMode={darkMode} />;
-  if (showLearn) return <Learn onBack={() => setShowLearn(false)} darkMode={darkMode} />;
+  if (showHelp) return <Help onBack={() => setShowHelp(false)} darkMode={darkMode} setDarkMode={setDarkMode} />;
+  if (showLearn) return <Learn onBack={() => setShowLearn(false)} darkMode={darkMode} setDarkMode={setDarkMode} />;
+  if (showDevelopedBy) return <DevelopedBy onBack={() => setShowDevelopedBy(false)} darkMode={darkMode} setDarkMode={setDarkMode} />;
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-[#2C2766]' : 'bg-[#FFFFFF]'}`}>

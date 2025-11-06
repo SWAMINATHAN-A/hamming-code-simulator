@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/tsconfig.json">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/tsconfig.json" />
+              <option name="originalContent" value="{&#10;  &quot;compilerOptions&quot;: {&#10;    &quot;target&quot;: &quot;ES2020&quot;,&#10;    &quot;useDefineForClassFields&quot;: true,&#10;    &quot;lib&quot;: [&quot;ES2020&quot;, &quot;DOM&quot;, &quot;DOM.Iterable&quot;],&#10;    &quot;module&quot;: &quot;ESNext&quot;,&#10;    &quot;skipLibCheck&quot;: true,&#10;&#10;    /* Bundler mode */&#10;    &quot;moduleResolution&quot;: &quot;bundler&quot;,&#10;    &quot;allowImportingTsExtensions&quot;: true,&#10;    &quot;resolveJsonModule&quot;: true,&#10;    &quot;isolatedModules&quot;: true,&#10;    &quot;noEmit&quot;: true,&#10;    &quot;jsx&quot;: &quot;react-jsx&quot;,&#10;&#10;    /* Linting */&#10;    &quot;strict&quot;: false,&#10;    &quot;noImplicitAny&quot;: false,&#10;    &quot;noUnusedLocals&quot;: false,&#10;    &quot;noUnusedParameters&quot;: false,&#10;    &quot;noFallthroughCasesInSwitch&quot;: true,&#10;&#10;    /* Module Resolution */&#10;    &quot;allowSyntheticDefaultImports&quot;: true,&#10;    &quot;esModuleInterop&quot;: true,&#10;    &quot;forceConsistentCasingInFileNames&quot;: true,&#10;&#10;    /* Path mapping */&#10;    &quot;baseUrl&quot;: &quot;.&quot;,&#10;    &quot;paths&quot;: {&#10;      &quot;@/*&quot;: [&quot;./src/*&quot;]&#10;    }&#10;  },&#10;  &quot;include&quot;: [&quot;src&quot;],&#10;  &quot;references&quot;: [{ &quot;path&quot;: &quot;./tsconfig.node.json&quot; }]&#10;}&#10;" />
+              <option name="updatedContent" value="{&#10;  &quot;compilerOptions&quot;: {&#10;    &quot;target&quot;: &quot;ES2020&quot;,&#10;    &quot;useDefineForClassFields&quot;: true,&#10;    &quot;lib&quot;: [&quot;ES2020&quot;, &quot;DOM&quot;, &quot;DOM.Iterable&quot;],&#10;    &quot;module&quot;: &quot;ESNext&quot;,&#10;    &quot;skipLibCheck&quot;: true,&#10;&#10;    /* Bundler mode */&#10;    &quot;moduleResolution&quot;: &quot;bundler&quot;,&#10;    &quot;allowImportingTsExtensions&quot;: true,&#10;    &quot;resolveJsonModule&quot;: true,&#10;    &quot;isolatedModules&quot;: true,&#10;    &quot;noEmit&quot;: true,&#10;    &quot;jsx&quot;: &quot;react-jsx&quot;,&#10;&#10;    /* Linting */&#10;    &quot;strict&quot;: false,&#10;    &quot;noImplicitAny&quot;: false,&#10;    &quot;noUnusedLocals&quot;: false,&#10;    &quot;noUnusedParameters&quot;: false,&#10;    &quot;noFallthroughCasesInSwitch&quot;: true,&#10;&#10;    /* Module Resolution */&#10;    &quot;allowSyntheticDefaultImports&quot;: true,&#10;    &quot;esModuleInterop&quot;: true,&#10;    &quot;forceConsistentCasingInFileNames&quot;: true,&#10;&#10;    /* Path mapping */&#10;    &quot;baseUrl&quot;: &quot;.&quot;,&#10;    &quot;paths&quot;: {&#10;      &quot;@/*&quot;: [&quot;./src/*&quot;]&#10;    }&#10;  },&#10;  &quot;include&quot;: [&quot;src&quot;],&#10;  &quot;references&quot;: [{ &quot;path&quot;: &quot;./tsconfig.node.json&quot; }]&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -78,7 +78,7 @@ export function BitVisualization({ bits, parityPositions, errorPosition, darkMod
                         ? 'bg-[#FFB300] border-2 border-[#FFB300] text-white'
                         : 'bg-[#FFB300] border-2 border-[#FFB300] text-white'
                       : darkMode
-                      ? 'bg-[#2C2766] border-2 border-[#7C70C8] text-[#FFB300]'
+                      ? 'bg-[#2a2a2a] border-2 border-gray-700 text-[#FFB300]'
                       : 'bg-[#FFFFFF] border-2 border-[#E7E6F8] text-[#24292F]'
                     }
                   `}

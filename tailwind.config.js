@@ -1,5 +1,6 @@
-/** @type {import('@tailwindcss/postcss7-compat').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,10 +9,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  // Silence the PurgeCSS warning
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
-  purge: false, // Disable PurgeCSS for now to silence the warning
 }

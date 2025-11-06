@@ -97,7 +97,7 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="space-y-6">
-        <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+        <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
           <div className="space-y-4">
             <div>
               <Label className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>Received Codeword</Label>
@@ -105,7 +105,7 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
                 placeholder="Enter received Hamming codeword (e.g., 1011010)"
                 value={receivedCodeword}
                 onChange={(e) => setReceivedCodeword(e.target.value)}
-                className={`mt-2 font-mono border-2 ${darkMode ? 'bg-[#2C2766] border-[#7C70C8] text-[#FFB300] placeholder:text-[#FFB300]/50' : 'bg-[#FFFFFF] border-[#E7E6F8] text-[#24292F] placeholder:text-[#24292F]/50'}`}
+                className={`mt-2 font-mono border-2 ${darkMode ? 'bg-[#2a2a2a] border-gray-700 text-[#FFB300] placeholder:text-[#FFB300]/50' : 'bg-[#FFFFFF] border-gray-300 text-[#24292F] placeholder:text-[#24292F]/50'}`}
               />
               <p className={`text-xs mt-2 ${darkMode ? 'text-[#FFB300]/70' : 'text-[#24292F]/70'}`}>
                 Enter the binary codeword received from transmission
@@ -127,7 +127,7 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>1</span>
@@ -136,7 +136,7 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
                 </div>
                 <div className="space-y-3">
                   {decodedResult.parityChecks.map((check: any, idx: number) => (
-                    <div key={idx} className={`p-3 rounded-lg border ${darkMode ? 'bg-[#2C2766] border-[#7C70C8]' : 'bg-[#FFFFFF] border-[#E7E6F8]'}`}>
+                    <div key={idx} className={`p-3 rounded-lg border ${darkMode ? 'bg-[#2a2a2a] border-gray-700' : 'bg-[#FFFFFF] border-gray-300'}`}>
                       <div className="flex justify-between items-center">
                         <span className={`text-sm ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
                           P{check.position} (positions {check.checks.join(', ')})
@@ -150,14 +150,14 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
                 </div>
               </Card>
 
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>2</span>
                   </div>
                   <h3 className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>Syndrome Analysis</h3>
                 </div>
-                <div className={`p-4 rounded-lg border-2 ${darkMode ? 'bg-[#2C2766] border-[#7C70C8]' : 'bg-[#FFFFFF] border-[#E7E6F8]'}`}>
+                <div className={`p-4 rounded-lg border-2 ${darkMode ? 'bg-[#2a2a2a] border-gray-700' : 'bg-[#FFFFFF] border-gray-300'}`}>
                   <div className="flex justify-between items-center mb-2">
                     <span className={`text-sm ${darkMode ? 'text-[#FFB300]/80' : 'text-[#24292F]/80'}`}>Syndrome Value:</span>
                     <span className={`font-mono ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
@@ -188,7 +188,7 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
                 )}
               </Card>
 
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>3</span>
@@ -205,14 +205,14 @@ export function DecoderPanel({ darkMode }: DecoderPanelProps) {
                 />
               </Card>
 
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>4</span>
                   </div>
                   <h3 className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>Extracted Data</h3>
                 </div>
-                <div className={`p-4 rounded-lg font-mono text-lg border-2 ${darkMode ? 'bg-[#2C2766] border-[#7C70C8] text-[#FFB300]' : 'bg-[#FFFFFF] border-[#E7E6F8] text-[#24292F]'}`}>
+                <div className={`p-4 rounded-lg font-mono text-lg border-2 ${darkMode ? 'bg-[#2a2a2a] border-gray-700 text-[#FFB300]' : 'bg-[#FFFFFF] border-gray-300 text-[#24292F]'}`}>
                   {decodedResult.dataBits.join('')}
                 </div>
                 <p className={`text-sm mt-2 ${darkMode ? 'text-[#FFB300]/70' : 'text-[#24292F]/70'}`}>

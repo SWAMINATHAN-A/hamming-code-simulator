@@ -5,11 +5,11 @@ import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Label } from './ui/label';
 import { Badge } from './ui/badge';
-import { AlertCircle, ArrowRight, Zap } from 'lucide-react';
+import { AlertCircle, ArrowRight, Zap, Copy, Check } from 'lucide-react';
 import { BitVisualization } from './BitVisualization';
 import { DetailedStepLog, DetailedStep } from './DetailedStepLog';
 import { motion, AnimatePresence } from 'motion/react';
-import { generateHammingCode, convertInputToBinary, simulateError } from './utils/hammingUtils';
+import { generateHammingCode, convertInputToBinary, simulateError, simulateManualError } from './utils/hammingUtils';
 // removed resizable split per request
 
 interface EncoderPanelProps {
@@ -23,6 +23,8 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
   const [hammingResult, setHammingResult] = useState<any>(null);
   const [errorSimulated, setErrorSimulated] = useState(false);
   const [detailedSteps, setDetailedSteps] = useState<DetailedStep[]>([]);
+  const [manualBitPosition, setManualBitPosition] = useState<string>('');
+  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   const handleConvertToBinary = () => {
     const result = convertInputToBinary(inputData, inputFormat);
@@ -81,6 +83,87 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
     setDetailedSteps(prev => [...prev, errorStep]);
   };
 
+  /**
+   * Handles manual bit flip at user-specified position
+   * Validates input and provides detailed feedback
+   */
+  const handleManualBitFlip = () => {
+    if (!hammingResult) return;
+
+    const position = parseInt(manualBitPosition, 10);
+
+    // Validate position input
+    if (isNaN(position)) {
+      alert('Please enter a valid number for the bit position.');
+      return;
+    }
+
+    // Convert to 0-indexed (user sees 1-indexed positions)
+    const zeroIndexedPosition = position - 1;
+
+    // Validate position range
+    if (zeroIndexedPosition < 0 || zeroIndexedPosition >= hammingResult.codeword.length) {
+      alert(`Please enter a position between 1 and ${hammingResult.codeword.length}.`);
+      return;
+    }
+
+    const errorResult = simulateManualError(hammingResult.codeword, zeroIndexedPosition);
+
+    if (!errorResult) {
+      alert('Failed to simulate error. Please try again.');
+      return;
+    }
+
+    setHammingResult({ ...hammingResult, codeword: errorResult.codeword, errorPosition: errorResult.errorPosition });
+    setErrorSimulated(true);
+
+    const errorStep: DetailedStep = {
+      id: 'manual-error-simulation',
+      title: 'Manual Error Simulation',
+      description: `A single-bit transmission error has been manually introduced at position ${position}`,
+      result: `Error at position ${position}`,
+      type: 'info',
+      details: [
+        `Error manually introduced at bit position: ${position}`,
+        `Bit flipped from ${hammingResult.codeword[errorResult.errorPosition]} to ${errorResult.codeword[errorResult.errorPosition]}`,
+        'Use the Decode tab to detect and correct this error'
+      ]
+    };
+
+    setDetailedSteps(prev => [...prev, errorStep]);
+
+    // Clear the input field after successful flip
+    setManualBitPosition('');
+  };
+
+  /**
+   * Copies the error-containing codeword to clipboard
+   * Provides visual feedback on success/failure
+   */
+  const handleCopyCodeword = async () => {
+    if (!hammingResult || !errorSimulated) return;
+
+    try {
+      // Convert codeword array to string
+      const codewordString = hammingResult.codeword.join('');
+
+      // Use modern Clipboard API
+      await navigator.clipboard.writeText(codewordString);
+
+      // Show success feedback
+      setCopiedToClipboard(true);
+
+      // Reset feedback after 2 seconds
+      setTimeout(() => {
+        setCopiedToClipboard(false);
+      }, 2000);
+    } catch (error) {
+      // Fallback for older browsers or when clipboard access denied
+      console.error('Failed to copy to clipboard:', error);
+      alert('Failed to copy to clipboard. Please try manually selecting and copying the codeword.');
+    }
+  };
+
   const downloadText = (filename: string, content: string) => {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -131,12 +214,12 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="space-y-6">
-        <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+        <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
           <div className="space-y-4">
             <div>
               <Label className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>Input Format</Label>
               <Select value={inputFormat} onValueChange={setInputFormat}>
-                <SelectTrigger className={`mt-2 ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8] text-[#FFB300]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8] text-[#24292F]'}`}>
+                <SelectTrigger className={`mt-2 ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700 text-[#FFB300]' : 'bg-[#FFFFFF] border-2 border-gray-300 text-[#24292F]'}`}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -155,7 +238,7 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
                 placeholder="Enter your data here..."
                 value={inputData}
                 onChange={(e) => setInputData(e.target.value)}
-                className={`mt-2 ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8] text-[#FFB300] placeholder:text-[#FFB300]/50' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8] text-[#24292F] placeholder:text-[#24292F]/50'}`}
+                className={`mt-2 ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700 text-[#FFB300] placeholder:text-[#FFB300]/50' : 'bg-[#FFFFFF] border-2 border-gray-300 text-[#24292F] placeholder:text-[#24292F]/50'}`}
               />
             </div>
 
@@ -171,7 +254,7 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
                 className="space-y-2"
               >
                 <Label className={darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}>Binary Stream</Label>
-                <div className={`p-4 rounded-lg font-mono text-sm break-all overflow-x-auto border-2 ${darkMode ? 'bg-[#2C2766] border-[#7C70C8] text-[#FFB300]' : 'bg-[#FFFFFF] border-[#E7E6F8] text-[#24292F]'}`}>
+                <div className={`p-4 rounded-lg font-mono text-sm break-all overflow-x-auto border-2 ${darkMode ? 'bg-[#2a2a2a] border-gray-700 text-[#FFB300]' : 'bg-[#FFFFFF] border-gray-300 text-[#24292F]'}`}>
                   {binaryStream}
                 </div>
                 <Button onClick={handleEncode} className="w-full bg-gradient-to-r from-[#FFB300] to-[#FFB300]/80 hover:from-[#FFB300]/90 hover:to-[#FFB300]/70 text-white shadow-md">
@@ -190,7 +273,7 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={`${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>1</span>
@@ -202,14 +285,14 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {hammingResult.parityPositions.map((pos: number) => (
-                    <Badge key={pos} className={`${darkMode ? 'bg-[#FFB300]/20 text-[#FFB300] border-[#7C70C8]' : 'bg-[#FFB300]/20 text-[#24292F] border-[#E7E6F8]'}`}>
+                    <Badge key={pos} className={`${darkMode ? 'bg-[#FFB300]/20 text-[#FFB300] border-gray-700' : 'bg-[#FFB300]/20 text-[#24292F] border-gray-300'}`}>
                       Position {pos}
                     </Badge>
                   ))}
                 </div>
               </Card>
 
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={`${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>2</span>
@@ -218,7 +301,7 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
                 </div>
                 <div className="space-y-3">
                   {hammingResult.parityCalculations.map((calc: any, idx: number) => (
-                    <div key={idx} className={`p-3 rounded-lg border ${darkMode ? 'bg-[#2C2766] border-[#7C70C8]' : 'bg-[#FFFFFF] border-[#E7E6F8]'}`}>
+                    <div key={idx} className={`p-3 rounded-lg border ${darkMode ? 'bg-[#2a2a2a] border-gray-700' : 'bg-[#FFFFFF] border-gray-300'}`}>
                       <div className="flex justify-between items-center">
                         <span className={`text-sm ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
                           P{calc.position} checks positions: {calc.checks.join(', ')}
@@ -232,7 +315,7 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
                 </div>
               </Card>
 
-              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2C2766] border-2 border-[#7C70C8]' : 'bg-[#FFFFFF] border-2 border-[#E7E6F8]'}`}>
+              <Card className={`p-6 shadow-lg ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700' : 'bg-[#FFFFFF] border-2 border-gray-300'}`}>
                 <div className="flex items-center gap-2 mb-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center ${darkMode ? 'bg-[#FFB300]/20' : 'bg-[#FFB300]/20'}`}>
                     <span className={`${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>3</span>
@@ -246,21 +329,95 @@ export function EncoderPanel({ darkMode }: EncoderPanelProps) {
                   darkMode={darkMode}
                   reverseOrder
                 />
-                <Button
-                  onClick={handleSimulateError}
-                  variant="outline"
-                  className={`mt-4 w-full shadow-md border-2 ${darkMode ? 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10' : 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10'}`}
-                  disabled={errorSimulated}
-                >
-                  <Zap className="w-4 h-4 mr-2" />
-                  {errorSimulated ? 'Error Simulated' : 'Simulate Transmission Error'}
-                </Button>
-                {errorSimulated && (
-                  <div className={`mt-3 p-3 rounded-lg flex items-start gap-2 border-2 ${darkMode ? 'bg-[#FFB300]/10 border-[#FFB300]' : 'bg-[#FFB300]/10 border-[#FFB300]'}`}>
-                    <AlertCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`} />
-                    <p className={`text-sm ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
-                      A single-bit error has been introduced at position {hammingResult.errorPosition + 1}. Use the Decode tab to detect and correct it!
+
+                {/* Error Simulation Controls */}
+                <div className="mt-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {/* Random Bit Flip Button */}
+                    <Button
+                      onClick={handleSimulateError}
+                      variant="outline"
+                      className={`flex-1 shadow-md border-2 ${darkMode ? 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10' : 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10'}`}
+                      disabled={errorSimulated}
+                      aria-label="Simulate random transmission error"
+                    >
+                      <Zap className="w-4 h-4 mr-2" />
+                      {errorSimulated ? 'Error Simulated' : 'Random Bit Flip'}
+                    </Button>
+
+                    {/* Manual Bit Flip Controls */}
+                    <div className="flex-1 flex gap-2">
+                      <Input
+                        type="number"
+                        min="1"
+                        max={hammingResult.codeword.length}
+                        placeholder={`1-${hammingResult.codeword.length}`}
+                        value={manualBitPosition}
+                        onChange={(e) => setManualBitPosition(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !errorSimulated) {
+                            handleManualBitFlip();
+                          }
+                        }}
+                        className={`w-20 ${darkMode ? 'bg-[#2a2a2a] border-2 border-gray-700 text-[#FFB300] placeholder:text-[#FFB300]/50' : 'bg-[#FFFFFF] border-2 border-gray-300 text-[#24292F] placeholder:text-[#24292F]/50'}`}
+                        disabled={errorSimulated}
+                        aria-label="Enter bit position to flip (1-indexed)"
+                      />
+                      <Button
+                        onClick={handleManualBitFlip}
+                        variant="outline"
+                        className={`flex-1 shadow-md border-2 ${darkMode ? 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10' : 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10'}`}
+                        disabled={errorSimulated || !manualBitPosition}
+                        aria-label="Flip bit at specified position"
+                      >
+                        Manual Bit Flip
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Helper text for manual input */}
+                  {!errorSimulated && (
+                    <p className={`text-xs ${darkMode ? 'text-[#FFB300]/70' : 'text-[#24292F]/70'}`}>
+                      💡 Choose "Random Bit Flip" for automatic error or enter a position (1-{hammingResult.codeword.length}) for manual control
                     </p>
+                  )}
+                </div>
+
+                {errorSimulated && (
+                  <div className="space-y-2">
+                    <div className={`mt-3 p-3 rounded-lg flex items-start gap-2 border-2 ${darkMode ? 'bg-[#FFB300]/10 border-[#FFB300]' : 'bg-[#FFB300]/10 border-[#FFB300]'}`}>
+                      <AlertCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`} />
+                      <p className={`text-sm ${darkMode ? 'text-[#FFB300]' : 'text-[#24292F]'}`}>
+                        A single-bit error has been introduced at position {hammingResult.errorPosition + 1}. Use the Decode tab to detect and correct it!
+                      </p>
+                    </div>
+
+                    {/* Copy Codeword Button */}
+                    <div className="flex items-center justify-between gap-3">
+                      <div className={`flex-1 p-2 rounded-lg font-mono text-sm break-all border ${darkMode ? 'bg-[#1a1a1a] border-gray-700 text-white' : 'bg-gray-50 border-gray-300 text-[#24292F]'}`}>
+                        <span className={`text-xs ${darkMode ? 'text-white/70' : 'text-[#24292F]/70'}`}>Codeword with error: </span>
+                        <span className="font-semibold">{hammingResult.codeword.join('')}</span>
+                      </div>
+                      <Button
+                        onClick={handleCopyCodeword}
+                        variant="outline"
+                        size="sm"
+                        className={`shadow-md border-2 whitespace-nowrap ${darkMode ? 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10' : 'border-[#FFB300] text-[#FFB300] hover:bg-[#FFB300]/10'}`}
+                        aria-label={copiedToClipboard ? 'Codeword copied to clipboard' : 'Copy codeword with error to clipboard'}
+                      >
+                        {copiedToClipboard ? (
+                          <>
+                            <Check className="w-4 h-4 mr-2" />
+                            Copied!
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-4 h-4 mr-2" />
+                            Copy
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </div>
                 )}
               </Card>

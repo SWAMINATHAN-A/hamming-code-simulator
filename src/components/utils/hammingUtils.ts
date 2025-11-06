@@ -233,6 +233,11 @@ export function generateHammingCode(dataBits: string) {
   };
 }
 
+/**
+ * Simulates a random single-bit error in the codeword
+ * @param codeword The original codeword
+ * @returns Object containing the modified codeword and the error position
+ */
 export function simulateError(codeword: string[]) {
   const errorPosition = Math.floor(Math.random() * codeword.length);
   const newCodeword = [...codeword];
@@ -241,6 +246,27 @@ export function simulateError(codeword: string[]) {
   return {
     codeword: newCodeword,
     errorPosition
+  };
+}
+
+/**
+ * Simulates a manual single-bit error at a specified position in the codeword
+ * @param codeword The original codeword
+ * @param position The position to flip (0-indexed)
+ * @returns Object containing the modified codeword and the error position, or null if position is invalid
+ */
+export function simulateManualError(codeword: string[], position: number) {
+  // Validate position
+  if (position < 0 || position >= codeword.length) {
+    return null;
+  }
+
+  const newCodeword = [...codeword];
+  newCodeword[position] = newCodeword[position] === '0' ? '1' : '0';
+
+  return {
+    codeword: newCodeword,
+    errorPosition: position
   };
 }
 
