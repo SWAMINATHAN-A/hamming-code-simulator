@@ -113,64 +113,61 @@ export default function Learn({ onBack, darkMode, setDarkMode }: LearnProps) {
                         </div>
 
 
-                        <div className={`rounded-xl p-5 shadow-lg border-2 ${darkMode ? 'bg-[#352E84] border-[#7C70C8]' : 'bg-yellow-50 border-yellow-200'}`}>
-                            <h3 className={`text-2xl font-bold mb-5 text-center ${headingColor}`}>Hamming Code Parity Coverage Table</h3>
-                            <div className="overflow-x-auto">
-                                <table className="min-w-[500px] w-full border-collapse border text-base text-center">
-                                    <thead>
-                                    <tr>
-                                        <th className="border px-6 py-2">Associated data bits</th>
-                                        <th className="border px-6 py-2">P₁</th>
-                                        <th className="border px-6 py-2">P₂</th>
-                                        <th className="border px-6 py-2">P₄</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2 text-[#FFB300] font-bold">X</td>
-                                        <td className="border px-6 py-2 text-[#FFB300] font-bold">X</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="border px-6 py-2">2</td>
-                                        <td className="border px-6 py-2">0</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2 text-[#FFB300] font-bold">X</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="border px-6 py-2">3</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2 text-[#FFB300] font-bold">X</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="border px-6 py-2">4</td>
-                                        <td className="border px-6 py-2">0</td>
-                                        <td className="border px-6 py-2">0</td>
-                                        <td className="border px-6 py-2">1</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="border px-6 py-2">5</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2">0</td>
-                                        <td className="border px-6 py-2">1</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="border px-6 py-2">6</td>
-                                        <td className="border px-6 py-2">0</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2">1</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="border px-6 py-2">7</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2">1</td>
-                                        <td className="border px-6 py-2">1</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div className={`rounded-2xl shadow-2xl overflow-hidden my-6 ${darkMode ? "border-2 border-white" : "border-2 border-gray-300"}`}>
+                            <table className="min-w-[500px] w-full border-collapse text-base text-center">
+                                <thead>
+                                <tr>
+                                    <th className={`border px-6 py-3 font-semibold text-lg ${darkMode ? "text-white border-white" : "border-gray-300"}`}>Associated data bits</th>
+                                    <th className={`border px-6 py-3 font-semibold text-lg ${darkMode ? "text-white border-white" : "border-gray-300"}`}>P₁</th>
+                                    <th className={`border px-6 py-3 font-semibold text-lg ${darkMode ? "text-white border-white" : "border-gray-300"}`}>P₂</th>
+                                    <th className={`border px-6 py-3 font-semibold text-lg ${darkMode ? "text-white border-white" : "border-gray-300"}`}>P₄</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 text-[#FFB300] font-bold ${darkMode ? "border-white" : "border-gray-300"}`}>X</td>
+                                    <td className={`border px-6 py-3 text-[#FFB300] font-bold ${darkMode ? "border-white" : "border-gray-300"}`}>X</td>
+                                </tr>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>2</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>0</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 text-[#FFB300] font-bold ${darkMode ? "border-white" : "border-gray-300"}`}>X</td>
+                                </tr>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>3</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 text-[#FFB300] font-bold ${darkMode ? "border-white" : "border-gray-300"}`}>X</td>
+                                </tr>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>4</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>0</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>0</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                </tr>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>5</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>0</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                </tr>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>6</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>0</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                </tr>
+                                <tr>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>7</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                    <td className={`border px-6 py-3 ${darkMode ? "text-white border-white" : "border-gray-300"}`}>1</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
 
 
