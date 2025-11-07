@@ -81,27 +81,27 @@ export default function DevelopedBy({ darkMode, setDarkMode, onBack }: Developed
     {
       name: "Joel Alfred Israel",
       regNo: "24BCE5361",
-      role: "Lead Developer & UI/UX",
-      github: "https://github.com/Joel01010",
-      linkedin: "https://www.linkedin.com/in/joel-alfred-israel-a24204315/",
-      email: "joel010.alfred@gmail.com",
+      role: " ",
+      github: "#",
+      linkedin: "#",
+      email: "#",
       image: "/profiles/joel.jpg"
     },
     {
       name: "Nithin",
       regNo: "24BCE5392",
-      role: "Backend & Algorithm Design",
-      github: "https://github.com/NITHIN777-DOTCOM",
-      linkedin: "https://www.linkedin.com/in/nithin-r-876b5b373/",
-      email: "nithinthegreat06@gmail.com",
+      role: " ",
+      github: "#",
+      linkedin: "#",
+      email: "#",
       image: "/profiles/nithin.jpg"
     }
   ];
 
   const guide = {
     name: "Dr. Swaminathan Annadurai",
-    regNo: "Faculty",
-    role: "Guide",
+    regNo: "Assistant Professor",
+    role: "#",
     github: "#",
     linkedin: "#",
     email: "#",
