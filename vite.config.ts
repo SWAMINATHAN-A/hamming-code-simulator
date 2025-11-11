@@ -3,13 +3,14 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig({
-  base: './', // ensures assets load correctly on Vercel
+  // 👇 Automatically sets correct base for both local and GitHub Pages
+  base: process.env.GITHUB_PAGES ? '/hamming-code-simulator/' : './',
   plugins: [react()],
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-    sourcemap: true, // optional but useful for debugging
+    sourcemap: true,
     rollupOptions: {
       input: path.resolve(__dirname, 'index.html'),
       output: {
@@ -21,7 +22,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'), // keep your src alias
+      '@': path.resolve(__dirname, './src'),
     },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
   },
