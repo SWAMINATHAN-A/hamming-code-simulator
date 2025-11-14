@@ -5,6 +5,8 @@
 
   # Visit our Website
 
+  https://hamming-code-simulator-five.vercel.app/
+
   ## Running the code
 
   Run `npm i` to install the dependencies.
