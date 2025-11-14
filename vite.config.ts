@@ -4,7 +4,7 @@ import path from 'path';
 
 export default defineConfig({
   // 👇 Automatically sets correct base for both local and GitHub Pages
-  base: process.env.GITHUB_PAGES ? '/hamming-code-simulator/' : './',
+  base: '/hamming-code-simulator/' ,
   plugins: [react()],
   build: {
     outDir: 'dist',
